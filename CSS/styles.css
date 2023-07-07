@@ -1,0 +1,104 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #4f0c17;
+    color: #05d9e8 ;
+}
+.container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+
+}
+header {
+    font-family: 'Orbitron', sans-serif;
+    font-weight:800 ;
+    font-size: 20px;
+    margin-left: 40px;
+}
+
+.status {
+    width:620px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 30px;
+    font-family: 'Gloria Hallelujah', cursive;
+    font-weight: bold;
+    font-size: 20px;
+
+}
+
+.turn{
+
+}
+
+.turn-color {
+    color: red;
+}
+
+.time {
+
+}
+
+
+.board {
+   
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 600px;
+    height: 600px;
+    /* margin-right: 80px; */
+}
+
+.square {
+  height: 80px;
+  width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.light {
+    background-color: #000000;
+
+}
+
+.dark {
+    background-color: #ec7f03;
+
+}
+
+.piece {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+}
+
+
+.white {
+    background-color: white;
+}
+
+.red {
+    background-color: red;
+}
+button {
+    background-color: yellow;
+    color: black;
+    border: 0.4vmin solid black;
+    margin-top: 90px;
+    margin-left: 50px;
+    border-radius: 4vmin;
+    height: 5vmin;
+    width: 20vmin;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+
+}
