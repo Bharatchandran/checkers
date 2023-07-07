@@ -1,15 +1,12 @@
-
-
 let board;
 let turn;
 let numRedPieces;
 let numWhitePieces;
 
-
-const squares = document.querySelectorAll('.board .square')
-let redPiece = document.querySelectorAll('.red');
-let whitePiece = document.querySelectorAll('.white');
-const hed = document.querySelector('header')
+const squares = document.querySelectorAll(".board .square");
+let redPiece = document.querySelectorAll(".red");
+let whitePiece = document.querySelectorAll(".white");
+const hed = document.querySelector("header");
 // hed.addEventListener('click',function()=>{
 //     console.log("hello")
 // })
@@ -29,45 +26,51 @@ function init() {
         8, null, 9, null, 10, null,11, null,
         null, 12, null, 13, null, 14, null, 15
     ];
-    render();
+	render();
 }
 
 function render() {
-    renderBoard();
-    turn = 'red';
-    pieceSelection();
+	renderBoard();
+	turn = "red";
+	pieceSelection();
 }
 
 function renderBoard() {
-    board.forEach((square, idx) => {
-        const squareEl = document.getElementById(`el${idx}`)
-        if(square <= 7 && square !== null){
-            squareEl.innerHTML = `<div class="piece white"></div>`
-        } else if (square > 7 && square !== null){
-            squareEl.innerHTML = `<div class="piece red"></div>`
-        }
-    });
-
+	board.forEach((square, idx) => {
+		const squareEl = document.getElementById(`el${idx}`);
+		if (square <= 7 && square !== null) {
+			squareEl.innerHTML = `<div class="piece white"></div>`;
+		} else if (square > 7 && square !== null) {
+			squareEl.innerHTML = `<div class="piece red"></div>`;
+		}
+	});
+	whitePiece = document.querySelectorAll(".white");
+	redPiece = document.querySelectorAll(".red");
 }
 
-function  pieceSelection() {
-    if(turn === 'red') {
-        console.log(redPiece)
-        redPiece.forEach(piece => {
-            console.log(piece)
-            piece.addEventListener('click', handleMove);
+function pieceSelection() {
+	if (turn === "red") {
+		console.log(redPiece);
+		redPiece.forEach((piece) => {
+			console.log(piece);
+			piece.addEventListener("click", handleMove);
+		});
+	} else if (turn === "white") {
+		whitePiece.forEach((piece) => {
+			console.log(piece);
+			piece.addEventListener("click", handleMove);
+		});
+	}
+}
 
-        });
-    } else if(turn === 'white') {
-        whitePiece.forEach(piece => {
-            console.log(piece)
-            piece.addEventListener('click', handleMove);
-        });
+function handleMove(evt) {
+    
+    let parentElId = evt.target.parentElement.id;
+    console.log(parentElId);
+    if (parentElId === 'el63'){
+        evt.target.style.border = "2px solid black"
+        // console.log("Hello");
+        // evt.target.classList.remove('red');
     }
-
-   
 }
 
-function handleMove () {
-    console.log("hello")
-}
