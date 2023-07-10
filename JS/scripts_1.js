@@ -121,26 +121,8 @@ function handleMove(evt) {
 			} 
 	
 		}
-		renderBoard();
-		document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',(evt) => {
 		
-			board[squareIdx[1]][squareIdx[3]] = null;
-			parentEl.innerHTML =  "";
-			// board[choice2Row][choice2Col] = null;
-			board[choice1Row][choice1Col] = pieceSelected;
-			// document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-			
-			document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
-			if (choice2Col !== undefined ){
-			
-				document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-
-			}
-
-			render();
-			
-			
-		})	
+		
 	}
 	if (choice2Col !== undefined){
 		if (board[choice2Row][choice2Col] === null ){
@@ -153,6 +135,35 @@ function handleMove(evt) {
 				board[choice2Row][choice2Col] = 'x';
 			} 
 	}
+		
+	renderBoard();
+}
+	if (choice1Col !== undefined){	
+		document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',(evt) => {
+		
+			board[squareIdx[1]][squareIdx[3]] = null;
+			parentEl.innerHTML =  "";
+			// board[choice2Row][choice2Col] = null;
+			board[choice1Row][choice1Col] = pieceSelected;
+			// document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
+			
+			document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
+			if (choice2Col !== undefined ){
+				board[choice2Row][choice2Col] = null;
+				console.log("test style2");
+				console.log("choice1 row and col", choice1Row,choice1Col)
+				console.log("choice2 row and col", choice2Row,choice2Col)
+				console.log(board)
+				document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
+
+			}
+
+			render();
+			
+			
+		})	
+	}
+	if (choice2Col !== undefined){
 		document.querySelector(`#r${choice2Row}c${choice2Col}`).addEventListener('click', (evt) => {
 			board[squareIdx[1]][squareIdx[3]] = null;
 			parentEl.innerHTML =  "";
@@ -161,12 +172,17 @@ function handleMove(evt) {
 
 			document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
 			if (choice1Col !== undefined){
+				board[choice1Row][choice1Col] = null;
+				console.log("test style1");
+				console.log("choice1 row and col", choice1Row,choice1Col)
+				console.log("choice2 row and col", choice2Row,choice2Col)
+				console.log(board)
+
 				document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
 			}
 			render();
 	} )	
-
-}
+	}
 }
 
 // function movePiece(row, col) {
