@@ -65,7 +65,7 @@ function renderBoard() {
 
 function pieceSelection() {
 	if (turn === "red") {
-		console.log(redPiece);
+		// console.log(redPiece);
 		redPiece.forEach((piece) => {
 			// console.log(piece);
 			piece.addEventListener("click", handleMove);
@@ -82,38 +82,23 @@ function handleMove(evt) {
 	
     let parentElId = evt.target.parentElement.id;
 	let parentEl = evt.target.parentElement
-	console.log(parentEl);
-	
 	let squareIdx = String(parentElId);
 	squareIdx = squareIdx.split("");
 	let pieceSelected = board[squareIdx[1]][squareIdx[3]];
-	console.log(pieceSelected,"hello");
-	console.log(squareIdx[1],"row", "col", squareIdx[3])
+	// console.log(board[squareIdx[1]][squareIdx[3]],"ping1")
+
 	let choice1Row;
 	let choice1Col;  
 	let choice2Row;
 	let choice2Col;
-	// let choice1Row = Number(squareIdx[1]) - 1;
-	// let choice1Col = Number(squareIdx[3]) - 1;
+
 	if (squareIdx[1] > 0 &&  squareIdx[3] > 0 ) {
 		choice1Row = Number(squareIdx[1]) - 1;
 	    choice1Col = Number(squareIdx[3]) - 1;
-	}
-	if(squareIdx[3] < 7 && squareIdx[1] > 0) {
-		choice2Row = Number(squareIdx[1]) - 1;
-		choice2Col = Number(squareIdx[3]) + 1;
-			
-	}
-	if(choice1Col !== undefined){
-		
-		console.log(choice1Row, choice1Col, "ping")
-		if (board[choice1Row][choice1Col] === null ){
-			console.log("test123");
+		if (board[choice1Row][choice1Col] === null  ){
 			board[choice1Row][choice1Col] = 'x';
 			
-		} else if (board[choice1Row][choice1Col] !== null && board[choice1Row][choice1Col] < 7 && squareIdx[3] > 1 && squareIdx[1] > 1) {
-			console.log("test123");
-			
+		} else if (board[choice1Row][choice1Col] !== null && board[choice1Row][choice1Col] <= 7 && squareIdx[3] > 1 && squareIdx[1] > 1) {
 			choice1Row = Number(squareIdx[1]) - 2;
 			choice1Col = Number(squareIdx[3]) - 2;
 			if (board[choice1Row][choice1Col] === null) {
@@ -121,103 +106,68 @@ function handleMove(evt) {
 			} 
 	
 		}
-		
-		
 	}
-	if (choice2Col !== undefined){
-		if (board[choice2Row][choice2Col] === null ){
-			board[choice2Row][choice2Col] = 'x';	
-				
-		} else if (board[choice2Row][choice2Col] !== null && board[choice2Row][choice2Col] < 7  && squareIdx[3] > 1 && squareIdx[1] < 6) {
-			choice2Row = Number(squareIdx[1]) - 2;
-			choice2Col = Number(squareIdx[3]) + 2;
-			if (board[choice2Row][choice2Col] === null) {
-				board[choice2Row][choice2Col] = 'x';
-			} 
+	if(squareIdx[3] < 7 && squareIdx[1] > 0) {
+		choice2Row = Number(squareIdx[1]) - 1;
+		choice2Col = Number(squareIdx[3]) + 1;
+		if (choice2Col !== undefined){
+			if (board[choice2Row][choice2Col] === null ){
+				board[choice2Row][choice2Col] = 'x';	
+					
+			} else if (board[choice2Row][choice2Col] !== null && board[choice2Row][choice2Col] < 7  && squareIdx[3] < 6 && squareIdx[1] > 1) {
+				choice2Row = Number(squareIdx[1]) - 2;
+				choice2Col = Number(squareIdx[3]) + 2;
+				if (board[choice2Row][choice2Col] === null) {
+					board[choice2Row][choice2Col] = 'x';
+				} 
+			}		 		
+		}
 	}
-		
 	renderBoard();
-}
-	if (choice1Col !== undefined){	
-		document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',(evt) => {
+	if (choice1Col !== undefined){		
 		
-			board[squareIdx[1]][squareIdx[3]] = null;
-			parentEl.innerHTML =  "";
-			// board[choice2Row][choice2Col] = null;
-			board[choice1Row][choice1Col] = pieceSelected;
-			// document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
+		document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',(evt) => {
+			console.log(evt.target.id)
+			if (board[choice1Row][choice1Col] === 'x') {
+				parentEl.innerHTML =  "";
+				board[choice1Row][choice1Col] = pieceSelected;
+				board[squareIdx[1]][squareIdx[3]] = null;
+				document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
+				if (choice2Col !== undefined ){
+					board[choice2Row][choice2Col] = null;
+					document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
+				}
+		
+				render();
+			} else return;
 			
-			document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
-			if (choice2Col !== undefined ){
-				board[choice2Row][choice2Col] = null;
-				console.log("test style2");
-				console.log("choice1 row and col", choice1Row,choice1Col)
-				console.log("choice2 row and col", choice2Row,choice2Col)
-				console.log(board)
-				document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-
-			}
-
-			render();
 			
 			
 		})	
+	
 	}
+
 	if (choice2Col !== undefined){
+		
 		document.querySelector(`#r${choice2Row}c${choice2Col}`).addEventListener('click', (evt) => {
-			board[squareIdx[1]][squareIdx[3]] = null;
-			parentEl.innerHTML =  "";
-			// board[choice1Row][choice1Col] = null;
-			board[choice2Row][choice2Col] = pieceSelected;
-
-			document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-			if (choice1Col !== undefined){
-				board[choice1Row][choice1Col] = null;
-				console.log("test style1");
-				console.log("choice1 row and col", choice1Row,choice1Col)
-				console.log("choice2 row and col", choice2Row,choice2Col)
-				console.log(board)
-
-				document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
-			}
-			render();
+			if (board[choice2Row][choice2Col] === 'x') {
+				parentEl.innerHTML =  "";
+				board[choice2Row][choice2Col] = pieceSelected;
+				board[squareIdx[1]][squareIdx[3]] = null;
+	
+				document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
+				if (choice1Col !== undefined){
+					board[choice1Row][choice1Col] = null;
+					document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
+				}
+				render();
+		} else return ;
 	} )	
+	
 	}
+
+
+
 }
-
-// function movePiece(row, col) {
-
-// }
-	
-		
-// 	}
-// 	if (choice1Col !== undefined){
-	
-// }
-// 	console.log(choice1Row, choice1Col);
-	
-// 	if (squareIdx[1] > 0 &&  squareIdx[3] < 7 ) {
-// 		choice2Row = Number(squareIdx[1]) - 1;
-// 	    choice2Col = Number(squareIdx[3]) + 1;
-
-		
-			
-	
-	
-// 		}
-// 		choice1Row = Number(squareIdx[1]) - 1;
-// 	    choice1Col = Number(squareIdx[3]) - 1;
-
-
-		
-	
-		
-		
-
-		
-// 	}
-// 	console.log(choice2Row, choice2Col);
-	
-// }
 
 
