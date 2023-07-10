@@ -60,18 +60,6 @@ function renderBoard() {
 
 
 
-// function renderBoard() {
-// 	board.forEach((square, idx) => {
-// 		const squareEl = document.getElementById(`el${idx}`);
-// 		if (square <= 7 && square !== null) {
-// 			squareEl.innerHTML = `<div class="piece white"></div>`;
-// 		} else if (square > 7 && square !== null) {
-// 			squareEl.innerHTML = `<div class="piece red"></div>`;
-// 		}
-// 	});
-// 	whitePiece = document.querySelectorAll(".white");
-// 	redPiece = document.querySelectorAll(".red");
-// }
 
 
 
@@ -110,7 +98,15 @@ function handleMove(evt) {
 	if (squareIdx[1] > 0 &&  squareIdx[3] > 0 ) {
 		choice1Row = Number(squareIdx[1]) - 1;
 	    choice1Col = Number(squareIdx[3]) - 1;
-
+	}
+	if(squareIdx[3] < 7 && squareIdx[1] > 0) {
+		choice2Row = Number(squareIdx[1]) - 1;
+		choice2Col = Number(squareIdx[3]) + 1;
+			
+	}
+	if(choice1Col !== undefined){
+		
+		console.log(choice1Row, choice1Col, "ping")
 		if (board[choice1Row][choice1Col] === null ){
 			console.log("test123");
 			board[choice1Row][choice1Col] = 'x';
@@ -123,14 +119,9 @@ function handleMove(evt) {
 			if (board[choice1Row][choice1Col] === null) {
 				board[choice1Row][choice1Col] = 'x';
 			} 
-			// else if (board[choice1Row][choice1Col] !== null || choice1Col === undefined && choice2Col === undefined){
-			// console.log("test123");
-				
-			// 	return
-			// }
 	
 		}
-
+		renderBoard();
 		document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',(evt) => {
 		
 			board[squareIdx[1]][squareIdx[3]] = null;
@@ -139,18 +130,19 @@ function handleMove(evt) {
 			board[choice1Row][choice1Col] = pieceSelected;
 			// document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
 			
+			document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
+			if (choice2Col !== undefined ){
+			
+				document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
+
+			}
+
+			render();
 			
 			
 		})	
-		document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
-		
 	}
-	console.log(choice1Row, choice1Col);
-	
-	if (squareIdx[1] > 0 &&  squareIdx[3] < 7 ) {
-		choice2Row = Number(squareIdx[1]) - 1;
-	    choice2Col = Number(squareIdx[3]) + 1;
-
+	if (choice2Col !== undefined){
 		if (board[choice2Row][choice2Col] === null ){
 			board[choice2Row][choice2Col] = 'x';	
 				
@@ -159,111 +151,57 @@ function handleMove(evt) {
 			choice2Col = Number(squareIdx[3]) + 2;
 			if (board[choice2Row][choice2Col] === null) {
 				board[choice2Row][choice2Col] = 'x';
-				
-	
 			} 
-			// else if (board[choice2Row][choice2Col] !== null || choice1Col === undefined && choice2Col === undefined ){
-			// 	return
-			// }
-	
-	
-		}
-
+	}
 		document.querySelector(`#r${choice2Row}c${choice2Col}`).addEventListener('click', (evt) => {
 			board[squareIdx[1]][squareIdx[3]] = null;
 			parentEl.innerHTML =  "";
 			// board[choice1Row][choice1Col] = null;
 			board[choice2Row][choice2Col] = pieceSelected;
-			
-			// document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
-		} )	
-		document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-	
-		
-		
 
-		
-	}
-	console.log(choice2Row, choice2Col);
-	// let choice2Row = Number(squareIdx[1]) - 1;
-	// let choice2Col = Number(squareIdx[3]) + 1;
+			document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
+			if (choice1Col !== undefined){
+				document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
+			}
+			render();
+	} )	
 
-	// if (board[choice1Row][choice1Col] === null &&  squareIdx[3] > 0 && squareIdx[1] > 0){
-	// 	console.log("test123");
-	// 	board[choice1Row][choice1Col] = 'x';
-		
-	// } else if (board[choice1Row][choice1Col] !== null && board[choice1Row][choice1Col] < 7 && squareIdx[3] > 0 && squareIdx[1] > 0) {
-	// 	console.log("test123");
-		
-	// 	choice1Row = Number(squareIdx[1]) - 2;
-	// 	choice1Col = Number(squareIdx[3]) - 2;
-	// 	if (board[choice1Row][choice1Col] === null) {
-	// 		board[choice1Row][choice1Col] = 'x';
-	// 	} 
-	// 	// else if (board[choice1Row][choice1Col] !== null || choice1Col === undefined && choice2Col === undefined){
-	// 	// console.log("test123");
-			
-	// 	// 	return
-	// 	// }
-
-	// }
-
-	// if (board[choice2Row][choice2Col] === null ){
-	// 	board[choice2Row][choice2Col] = 'x';	
-			
-	// } else if (board[choice2Row][choice2Col] !== null && board[choice2Row][choice2Col] < 7 ) {
-	// 	choice2Row = Number(squareIdx[1]) - 2;
-	// 	choice2Col = Number(squareIdx[3]) + 2;
-	// 	if (board[choice2Row][choice2Col] === null) {
-	// 		board[choice2Row][choice2Col] = 'x';
-			
-
-	// 	} 
-	// 	// else if (board[choice2Row][choice2Col] !== null || choice1Col === undefined && choice2Col === undefined ){
-	// 	// 	return
-	// 	// }
-
-
-	// }
-	console.log(`#r${choice1Col}c${choice1Row}`)
-	console.log(`#r${choice2Col}c${choice2Row}`)
-
-	// if (squareIdx[1] > 0 && squareIdx[3] > 0){ 
-	// 	document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',(evt) => {
-		
-	// 		board[squareIdx[1]][squareIdx[3]] = null;
-	// 		parentEl.innerHTML =  "";
-	// 		board[choice2Row][choice2Col] = null;
-	// 		board[choice1Row][choice1Col] = pieceSelected;
-	// 		document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
-	// 		document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-			
-	// 		render()
-	
-	
-	// 	})	
-	// }
-	
-	
-	// if (squareIdx[1] > 0 && squareIdx[3] < 7){
-	
-	// document.querySelector(`#r${choice2Row}c${choice2Col}`).addEventListener('click', (evt) => {
-	// 	board[squareIdx[1]][squareIdx[3]] = null;
-	// 	parentEl.innerHTML =  "";
-	// 	board[choice1Row][choice1Col] = null;
-	// 	board[choice2Row][choice2Col] = pieceSelected;
-		
-	// 	// document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
-	// 	// document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-	// 	render()
-	// } )	
-
-	
-	
-	// render()
-	// }
-console.log("hello")
-render();
 }
+}
+
+// function movePiece(row, col) {
+
+// }
+	
+		
+// 	}
+// 	if (choice1Col !== undefined){
+	
+// }
+// 	console.log(choice1Row, choice1Col);
+	
+// 	if (squareIdx[1] > 0 &&  squareIdx[3] < 7 ) {
+// 		choice2Row = Number(squareIdx[1]) - 1;
+// 	    choice2Col = Number(squareIdx[3]) + 1;
+
+		
+			
+	
+	
+// 		}
+// 		choice1Row = Number(squareIdx[1]) - 1;
+// 	    choice1Col = Number(squareIdx[3]) - 1;
+
+
+		
+	
+		
+		
+
+		
+// 	}
+// 	console.log(choice2Row, choice2Col);
+	
+// }
 
 
