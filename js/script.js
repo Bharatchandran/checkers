@@ -18,6 +18,7 @@ let selectedPieceIdx;
 
 
 
+
 init();
 function init() {
     board = [
