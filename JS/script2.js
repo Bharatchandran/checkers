@@ -77,17 +77,17 @@ function checkIfCanMOve (i, j) {
     
             if(board[i][j] > 7 && board[i][j] !== null ) {
     
-
                 if(i === 0){
                     moveLeftDiag = false;
                     moveRightDiag = false;
                     return {
-                            "moveRightDiag" : moveRightDiag,
-                            "moveLeftDiag" : moveLeftDiag,
-                            idx : `r${i}c${j}`
-
+                        "moveLeftDiag" : moveLeftDiag,
+                        "moveRightDiag" : moveRightDiag,
+                        idx : `r${i}c${j}`
+                        
                     }
-                } else if (j <= 0) {
+                } else if (j === 0) {
+                    console.log(board);
                     console.log(board[i - 1][j + 1])
                     if (board[i - 1][j + 1] === null ){
                     console.log("Hello")
@@ -95,8 +95,8 @@ function checkIfCanMOve (i, j) {
                         moveLeftDiag = false;
                         moveRightDiag = true;
                         return{
-                            "moveRightDiag" : moveRightDiag,
                             "moveLeftDiag" : moveLeftDiag,
+                            "moveRightDiag" : moveRightDiag,
                             idx : `r${i}c${j}`
                         }
                         
@@ -108,8 +108,8 @@ function checkIfCanMOve (i, j) {
                         moveLeftDiag = false;
                         moveRightDiag = false;
                         return{
-                            "moveRightDiag" : moveRightDiag,
                             "moveLeftDiag" : moveLeftDiag,
+                            "moveRightDiag" : moveRightDiag,
                             idx : `r${i}c${j}`
                         }
                     
@@ -145,8 +145,8 @@ function checkIfCanMOve (i, j) {
                         moveRightDiag = false
                     }
                     return {
-                        'moveRightDiag' : moveRightDiag,
                         'moveLeftDiag' : moveLeftDiag,
+                        'moveRightDiag' : moveRightDiag,
                         idx : `r${i}c${j}`
                     }
                 }
@@ -180,15 +180,21 @@ function checkIfCanMOve (i, j) {
 function pieceSelection () {
     if (turn === "red") {
         let redPieceIdx = getRedIdx()
-        console.log(redPieceIdx);
+        // console.log(redPieceIdx);
         redPieceIdx.forEach( (red) => {
             red = red.split("")
-            let checkMove = checkIfCanMOve(red[1],red[3]);
+            console.log(Number(red[1]))
+            let row = Number(red[1]);
+            let col = Number(red[3])
+
+            let checkMove = checkIfCanMOve(row,col);
             if (checkMove.moveLeftDiag === true || checkMove.moveRightDiag === true){
-                document.querySelector(`#r${red[1]}c${red[3]} > div`).addEventListener("click",handleMove)
                 // console.log(checkMove)
-            } else return
+                document.querySelector(`#r${red[1]}c${red[3]} > div`).addEventListener("click",handleMove)
+            } 
             console.log(checkMove)
+            // else return
+            // console.log(checkMove)
             // console.log(red.split(""))
         })
     }
