@@ -14,7 +14,8 @@ let choice2Row;
 let choice2Col;
 let myName;
 let parentEl;
-let redPieceIdx;
+let selectedPieceIdx;
+
 
 
 init();
@@ -29,14 +30,15 @@ function init() {
         [8, null, 9, null, 10, null, 11, null],
         [null, 12, null, 13, null, 14, null, 15]
     ];
-
+    turn = -1;
     render();
 }
 
 function render() {
-
+    
+    
     renderBoard();
-    turn = "red";
+    
 
     pieceSelection();
 }
@@ -62,14 +64,22 @@ function renderBoard() {
     pieceSelection();
 }
 
-function getRedIdx() {
-    let wholeBoard = document.querySelectorAll(".board > div > div.red");
-    let redPieceIdx = [];
-    wholeBoard.forEach(el => {
+function getPieceIdx() {
+    let wholeBoard;
+    if (turn === -1){
+        wholeBoard = document.querySelectorAll(".board > div > div.red");
+    } else if (turn === 1) {
+        
+        wholeBoard = document.querySelectorAll(".board > div > div.white");
+
+        
+    }
+    let pieceIdx = [];
+    wholeBoard.forEach( (el) => {
         let elIdx = el.parentElement.id
-        redPieceIdx.push(elIdx)
+        pieceIdx.push(elIdx)
     })
-    return redPieceIdx
+    return pieceIdx
 }
 
 function checkIfCanMOve(i, j) {
@@ -145,6 +155,70 @@ function checkIfCanMOve(i, j) {
                 idx: `r${i}c${j}`
             }
         }
+    } else if (board[i][j] <=7 && board[i][j] !== null) {
+        if(i === 7) {
+            moveLeftDiag = false;
+            moveRightDiag = false;
+            return {
+                "moveLeftDiag": moveLeftDiag,
+                "moveRightDiag": moveRightDiag,
+                idx: `r${i}c${j}`
+
+            }
+        } else if (j === 0){
+            if (board[i+1][j+1] === null) {
+                moveLeftDiag = false;
+                moveRightDiag = true;
+                return {
+                    "moveLeftDiag": moveLeftDiag,
+                    "moveRightDiag": moveRightDiag,
+                    idx: `r${i}c${j}`
+                }
+            } else {
+                moveLeftDiag = false;
+                moveRightDiag = false;
+                return {
+                    "moveLeftDiag": moveLeftDiag,
+                    "moveRightDiag": moveRightDiag,
+                    idx: `r${i}c${j}`
+                }
+            }
+        } else if (j >= 7) {
+            if (board[i + 1 ][j - 1] === null) {
+                moveLeftDiag = true;
+                moveRightDiag = false;
+                return {
+                    "moveLeftDiag": moveLeftDiag,
+                    "moveRightDiag": moveRightDiag,
+                    idx: `r${i}c${j}`
+                }
+
+            } else {
+                moveLeftDiag = false;
+                moveRightDiag = false;
+                return {
+                    "moveLeftDiag": moveLeftDiag,
+                    "moveRightDiag": moveRightDiag,
+                    idx: `r${i}c${j}`
+                }
+            }
+        }  else {
+            if (board[i + 1][j - 1] === null) {
+                moveLeftDiag = true;
+            } else {
+                moveLeftDiag = false;
+            }
+            if (board[i + 1][j + 1] === null) {
+                moveRightDiag = true;
+            } else {
+                moveRightDiag = false
+            }
+            return {
+                'moveLeftDiag': moveLeftDiag,
+                'moveRightDiag': moveRightDiag,
+                idx: `r${i}c${j}`
+            }
+        }
     }
 
 
@@ -152,22 +226,25 @@ function checkIfCanMOve(i, j) {
 
 function pieceSelection() {
 
-    if (turn === "red") {
-        redPieceIdx = getRedIdx()
-        redPieceIdx.forEach((red) => {
-            red = red.split("")
-            let row = Number(red[1]);
-            let col = Number(red[3])
+   
+        selectedPieceIdx = getPieceIdx();
+        selectedPieceIdx.forEach((el) => {
+            el = el.split("")
+            let row = Number(el[1]);
+            let col = Number(el[3])
 
             let checkMove = checkIfCanMOve(row, col);
+            
             if (checkMove.moveLeftDiag === true || checkMove.moveRightDiag === true) {
-                document.querySelector(`#r${red[1]}c${red[3]} > div`).addEventListener("click", handleMove)
+                document.querySelector(`#r${el[1]}c${el[3]} > div`).addEventListener("click", handleMove)
             }
         })
-    }
+        
+  
 }
 
 function handleMove(evt) {
+    console.log("ping");
     parentElId = evt.target.parentElement.id;
     parentEl = evt.target.parentElement
     squareIdx = String(parentElId);
@@ -177,11 +254,14 @@ function handleMove(evt) {
     renderBoard();
     makeChoice();
     removePieceEventListener();
+    turn *= -1;
+    render()
 
 
 }
 
 function assignChoices() {
+    if (turn === -1){
     if (squareIdx[1] > 0 && squareIdx[3] > 0) {
         choice1Row = Number(squareIdx[1]) - 1;
         choice1Col = Number(squareIdx[3]) - 1;
@@ -214,7 +294,41 @@ function assignChoices() {
             }
         }
     }
+} else if (turn === 1) {
+    if (squareIdx[1] < 7 && squareIdx[3] > 0) {
+        choice1Row = Number(squareIdx[1]) + 1;
+        choice1Col = Number(squareIdx[3]) - 1;
+
+        if (board[choice1Row][choice1Col] === null) {
+            board[choice1Row][choice1Col] = 'x';
+
+        } else if (board[choice1Row][choice1Col] !== null && board[choice1Row][choice1Col] > 7 && squareIdx[3] > 1 && squareIdx[1] < 6) {
+            choice1Row = Number(squareIdx[1]) + 2;
+            choice1Col = Number(squareIdx[3]) - 2;
+            if (board[choice1Row][choice1Col] === null) {
+                board[choice1Row][choice1Col] = 'x';
+            }
+
+        }
+    }
+    if (squareIdx[1] < 7 && squareIdx[3] < 7  ) {
+        choice2Row = Number(squareIdx[1]) + 1;
+        choice2Col = Number(squareIdx[3]) + 1;
+        if (choice2Col !== undefined) {
+            if (board[choice2Row][choice2Col] === null) {
+                board[choice2Row][choice2Col] = 'x';
+
+            } else if (board[choice2Row][choice2Col] !== null && board[choice2Row][choice2Col] > 7 && squareIdx[3] < 6 && squareIdx[1] < 6 ) {
+                choice2Row = Number(squareIdx[1]) + 2;
+                choice2Col = Number(squareIdx[3]) + 2;
+                if (board[choice2Row][choice2Col] === null) {
+                    board[choice2Row][choice2Col] = 'x';
+                }
+            }
+        }
+    }
 }
+} 
 
 function makeChoice() {
     if (choice1Col !== undefined) {
@@ -278,25 +392,14 @@ function selectChoice2() {
 
 }
 
+
 function removePieceEventListener() {
 
-    redPieceIdx = getRedIdx()
-    redPieceIdx.forEach((red) => {
-        red = red.split("")
-        let row = Number(red[1]);
-        let col = Number(red[3])
-        document.querySelector(`#r${red[1]}c${red[3]} > div`).removeEventListener("click", handleMove)
-
-    })
-}
-
-function addPieceEventListener() {
-    redPieceIdx = getRedIdx()
-    redPieceIdx.forEach((red) => {
-        red = red.split("")
-        let row = Number(red[1]);
-        let col = Number(red[3])
-        document.querySelector(`#r${red[1]}c${red[3]} > div`).addEventListener("click", handleMove)
+    selectedPieceIdx = getPieceIdx()
+    selectedPieceIdx.forEach((el) => {
+        el = el.split("")
+       
+        document.querySelector(`#r${el[1]}c${el[3]} > div`).removeEventListener("click", handleMove)
 
     })
 }
