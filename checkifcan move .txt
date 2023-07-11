@@ -1,0 +1,68 @@
+function checkIfCanMOve (piece) {
+    let moveLeftDiag;
+    let moveRightDiag;
+    for ( let i = 0; i < 7; i++ ) {
+        for (let j = 0; j < 7 ; j++) {
+            if(board[i][j] > 7 && board[i][j] !== null ) {
+                if(i === 0){
+                    moveLeftDiag = false;
+                    moveRightDiag = false;
+                    return {
+                            "moveRightDiag" : moveRightDiag,
+                            "moveLeftDiag" : moveLeftDiag
+                    }
+                } else if (j <= 0) {
+                    if (board[i - 1][j + 1] === null ){
+                        moveLeftDiag = false;
+                        moveRightDiag = true;
+                        return{
+                            "moveRightDiag" : moveRightDiag,
+                            "moveLeftDiag" : moveLeftDiag
+                        }
+                        
+                    } else {
+                        moveLeftDiag = false;
+                        moveRightDiag = false;
+                        return{
+                            "moveRightDiag" : moveRightDiag,
+                            "moveLeftDiag" : moveLeftDiag
+                        }
+                    
+                    }
+                } else if (j >= 7 ) {
+                    if(board[i - 1][j - 1] === null){
+                        moveLeftDiag = true;
+                        moveRightDiag = false;
+                        return {
+                            "moveLeftDiag" : moveLeftDiag,
+                            "moveRightDiag" : moveRightDiag
+                        }
+                        
+                    } else {
+                        moveLeftDiag = false;
+                        moveRightDiag = false;
+                        return {
+                            "moveLeftDiag" : moveLeftDiag,
+                            "moveRightDiag" : moveRightDiag
+                        }
+                    }
+                } else {
+                    if(board[i-1][j-1] === null){
+                        moveLeftDiag = true;
+                    } else {
+                        moveLeftDiag = false;
+                    }
+                    if (board[i-1][j+1] === null){
+                        moveRightDiag = true;
+                    } else {
+                        moveRightDiag = false
+                    }
+                    return {
+                        'moveRightDiag' : moveRightDiag,
+                        'moveLeftDiag' : moveLeftDiag
+                    }
+                }
+            }
+        }
+    }
+}
