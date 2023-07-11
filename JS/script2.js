@@ -63,7 +63,7 @@ function getRedIdx () {
             let elIdx = el.parentElement.id
             
             redPieceIdx.push(elIdx)
-            console.log(redPieceIdx)
+            // console.log(redPieceIdx)
         })
     // console.log(redPieceIdx)
     return redPieceIdx
@@ -73,7 +73,7 @@ function getRedIdx () {
 function checkIfCanMOve (i, j) {
     let moveLeftDiag;
     let moveRightDiag;
-    console.log(board)
+    // console.log(board)
     
             if(board[i][j] > 7 && board[i][j] !== null ) {
     
@@ -186,6 +186,7 @@ function pieceSelection () {
             let checkMove = checkIfCanMOve(red[1],red[3]);
             if (checkMove.moveLeftDiag === true || checkMove.moveRightDiag === true){
                 document.querySelector(`#r${red[1]}c${red[3]} > div`).addEventListener("click",handleMove)
+                // console.log(checkMove)
             } else return
             console.log(checkMove)
             // console.log(red.split(""))
