@@ -54,7 +54,6 @@ function renderBoard() {
 	redPiece = document.querySelectorAll(".red");
     
 	whitePiece = document.querySelectorAll(".white");
-    pieceSelection();
 }
 
 function getRedIdx () {
@@ -207,10 +206,6 @@ function pieceSelection () {
 
 
 function handleMove(evt) {
-    // document.querySelector(`#r${choice1Row}c${choice1Col}`).removeEventListener('click');
-    // document.querySelector(`#r${choice2Row}c${choice2Col}`).removeEventListener("click");
-
-
 	console.log(board);
     console.log("handleMove")
     let parentElId = evt.target.parentElement.id;
@@ -267,42 +262,8 @@ function handleMove(evt) {
 		console.log("before choice 1 event listener")
         // console.log(choice1Row,choice1Col,"before event listener")
         if (board[choice1Row][choice1Col] === 'x') {
-		document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',() => {
-            selectChoice1 (parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col )
-        },{ once: true } 
-        )}
-            }
-			
-            if (choice2Col !== undefined){
-
-                // console.log("ping")
-                // console.log("before choice 2 event listener")
-                
-                if (board[choice2Row][choice2Col] === 'x') {
-                document.querySelector(`#r${choice2Row}c${choice2Col}`).addEventListener('click', (evt) => {
-                    selectChoice2(parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col )
-                    }, { once: true }
-                ) }
-          
-        
-            }
-
-            // document.querySelector(`#r${choice1Row}c${choice1Col}`).removeEventListener('click', () => {
-            //     selectChoice1 (parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col )
-            // });
-            // document.querySelector(`#r${choice2Row}c${choice2Col}`).removeEventListener("click", () => {
-            //     selectChoice2(parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col )
-            // });
-            document.querySelector(`#r${choice1Row}c${choice1Col}`).removeEventListener('click',selectChoice1.bind(parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col ));
-            document.querySelector(`#r${choice2Row}c${choice2Col}`).removeEventListener("click",
-                selectChoice2.bind(parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col )
-            );
-			render()
-	}
-
-	
-function selectChoice1 (parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col ) {
-    console.log(board);
+		document.querySelector(`#r${choice1Row}c${choice1Col}`).addEventListener('click',(evt) => {
+	console.log(board);
 
 			console.log("after choice 1 event listener");
 				parentEl.innerHTML =  "";
@@ -315,20 +276,30 @@ function selectChoice1 (parentEl ,pieceSelected ,squareIdx, choice1Row, choice1C
                     if (board[choice2Row][choice2Col] === 'x') {
 					board[choice2Row][choice2Col] = null;
 					document.getElementById(`r${choice2Row}c${choice2Col}`).style.backgroundColor = "#ec7f03"
-                    // document.querySelector(`#r${choice2Row}c${choice2Col}`).removeEventListener("click",() => {
-                    //     selectChoice2(parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col )
-                    // })
-                    
-
-                }
+                    // document.querySelector(`#r${choice2Row}c${choice2Col}`).removeAttribute("onclick")
+                    }
 				}
 			// document.querySelector(`#r${choice1Row}c${choice1Col}`).removeAttribute("onClick")
-            renderBoard();
-				// render();
-		
-}
 
-function selectChoice2(parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col ){
+				render();
+		
+			
+        }
+        ,
+            {
+                once: true
+            } 
+        )}
+            }
+			
+            if (choice2Col !== undefined){
+
+                // console.log("ping")
+                // console.log("before choice 2 event listener")
+                
+                if (board[choice2Row][choice2Col] === 'x') {
+                document.querySelector(`#r${choice2Row}c${choice2Col}`).addEventListener('click', (evt) => {
+	console.log(board);
 
         
                     // console.log("after choice 2 event listener");
@@ -346,16 +317,32 @@ function selectChoice2(parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Co
                             document.getElementById(`r${choice1Row}c${choice1Col}`).style.backgroundColor = "#ec7f03"
                             // document.querySelector(`#r${choice1Row}c${choice1Col}`).removeEventListener("click",)
                             
-                            // document.querySelector(`#r${choice1Row}c${choice1Col}`).removeEventListener('click',() => {
-                            //     selectChoice1 (parentEl ,pieceSelected ,squareIdx, choice1Row, choice1Col,choice2Row, choice2Col )
-                            // })
+                            document.querySelector(`#r${choice1Row}c${choice1Col}`).removeAttribute("onclick")
 
                         }
 
                         }
-                        renderBoard();
+                        render();
+                    } 
+                
+                ,
+                {
+                    once: true
+                
+                }
+                ) 
+                }
+          
+        
+            }
+			
+	}
 
-                        // render();
+	
+function selectChoice1 () {
+    
 }
+
+
 
 
