@@ -18,6 +18,7 @@ let choice4Row;
 let choice4Col;
 let myName;
 let parentEl;
+let winner;
 
 
 let selectedEl;
@@ -35,13 +36,18 @@ let moveRightDiag;
 let moveLeftDiagBackward;
 let moveRightDiagBackward;
 
+const resetBtn = document.querySelector("button");
+const winnerText = document.querySelector(".player-won");
+const turnText = document.querySelector(".turn");
+const timeText = document.querySelector(".time");
 
-
-
+document.querySelector("button").addEventListener('click', init)
 
 init();
 
 function init() {
+    
+    
     board = [
         [0, null, 1, null, 2, null, 3, null],
         [null, 4, null, 5, null, 6, null, 7],
@@ -52,10 +58,12 @@ function init() {
         [8, null, 9, null, 10, null, 11, null],
         [null, 11, null, 13, null, 14, null, 15]
     ];
+    // document.querySelectorAll(".light").style.backgroundColor
+    // renderBoard();
+    winner = null;
     turn = -1;
     player1Points = 0;
     player2Points = 0;
-
     renderTime();
     render();
 }
@@ -65,15 +73,32 @@ function render() {
     pieceSelection();
     renderTurnText();
     getWinner();
+    winnerText.style.visibility = winner ? 'visible' : 'hidden';
+    resetBtn.style.visibility = winner ? 'visible' : 'hidden';
 
 }
 
 function getWinner() {
+    let winMsg = document.querySelector('.player-won');
     if (player1Points === 8){
         console.log("player 1 won") ;
+        winMsg.innerHTML = "PLAYER 1 WON!!"
+        winMsg.style.color = "red"
+        winner = 1;
+        turnText.innerHTML = "";
+        timeText.classList.add("time-won")
+        clearInterval(time);
     } else if (player2Points === 8){
         console.log("player 2 won") ;
+        winMsg.innerHTML = "PLAYER 2 WON!!"
+        winMsg.style.color = "white"
+        winner = 1;
+        turnText.innerHTML = "";
+        timeText.classList.add("time-won")
+        clearInterval(time);        
     }
+    
+
     
 }
 
@@ -102,22 +127,29 @@ function renderBoard() {
                 
                 const cellId = `r${rowIdx}c${colIdx}`
                 const cellPiece = document.getElementById(cellId);
-                
+                // console.log(cellPiece.classList.contains("light"))
                if (square <= 7 && square !== null){
                     cellPiece.innerHTML = `<div class="piece white "></div>`;
                 }  else if (square > 7 && square !== null) {
                     cellPiece.innerHTML = `<div class="piece red "></div>`;
                 } else if (square === 'x' && square !== null) {
                     cellPiece.style.backgroundColor = 'green';
-    
-                }
+                } else if (square === null && cellPiece.classList.contains("dark")) {
+                    cellPiece.innerHTML = "";
+                    cellPiece.style.backgroundColor = '#ec7f03';
+
+                } 
+                // else if (square === null && cellPiece.classList.contains("dark")){
+                //     cellPiece.style.backgroundColor = 'white';
+                // }
+
             })
         });
    
     addKingClass()
-    redPiece = document.querySelectorAll(".red");
+    // redPiece = document.querySelectorAll(".red");
 
-    whitePiece = document.querySelectorAll(".white");
+    // whitePiece = document.querySelectorAll(".white");
     // render();
     // pieceSelection();
 }
@@ -318,7 +350,7 @@ function checkMoveRedBackward(i,j){
     
 
 
-        }
+    }
 
 function checkMoveWhiteBackWard(i,j){
     if (i === 0) {
@@ -352,14 +384,14 @@ function checkMoveWhiteBackWard(i,j){
             if(board[i - 1][j + 1] === null){
                 moveRightDiagBackward = true;
 
-            } else if (j < 6  && i > 1 && board[i - 1][j + 1] <= 7 && board[i - 2][j + 2] === null){
+            } else if (j < 6  && i > 1 && board[i - 1][j + 1] > 7 && board[i - 2][j + 2] === null){
                 moveRightDiagBackward = true;
             } else {
                 moveRightDiagBackward = false;
             }
             if(board[i - 1][j - 1] === null){
                 moveLeftDiagBackward = true;
-            } else if ( j > 1 && i > 1 && board[i - 1][j - 1] <= 7 && board[i - 2][j - 2] === null ){
+            } else if ( j > 1 && i > 1 && board[i - 1][j - 1] > 7 && board[i - 2][j - 2] === null ){
                 moveLeftDiagBackward = true;
             } else {
                 moveLeftDiagBackward = false;
@@ -464,7 +496,7 @@ function moveDiagonalRightForwardRed () {
         if (board[choice2Row][choice2Col] === null) {
             board[choice2Row][choice2Col] = 'x';
 
-        } else if (board[choice2Row][choice2Col] !== null && board[choice2Row][choice2Col] < 7 && squareIdx[3] < 6 && squareIdx[1] > 1) {
+        } else if (board[choice2Row][choice2Col] !== null && board[choice2Row][choice2Col] <= 7 && squareIdx[3] < 6 && squareIdx[1] > 1) {
             choice2Row = Number(squareIdx[1]) - 2;
             choice2Col = Number(squareIdx[3]) + 2;
             if (board[choice2Row][choice2Col] === null) {
@@ -533,7 +565,7 @@ function moveDiagonalRightBackwardRed () {
         if (board[choice4Row][choice4Col] === null) {
             board[choice4Row][choice4Col] = 'x';
 
-        } else if (board[choice4Row][choice4Col] !== null && board[choice4Row][choice4Col] < 7 && squareIdx[3] < 6 && squareIdx[1] < 6) {
+        } else if (board[choice4Row][choice4Col] !== null && board[choice4Row][choice4Col] <= 7 && squareIdx[3] < 6 && squareIdx[1] < 6) {
             choice4Row = Number(squareIdx[1]) + 2;
             choice4Col = Number(squareIdx[3]) + 2;
             if (board[choice4Row][choice4Col] === null) {

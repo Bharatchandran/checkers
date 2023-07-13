@@ -20,6 +20,7 @@ header {
     font-weight:800 ;
     font-size: 20px;
     margin-left: 40px;
+    margin-top: 50px;
 }
 
 .status {
@@ -93,7 +94,7 @@ button {
     background-color: yellow;
     color: black;
     border: 0.4vmin solid black;
-    margin-top: 90px;
+    margin-top: 43px;
     margin-left: 50px;
     border-radius: 4vmin;
     height: 5vmin;
@@ -119,3 +120,19 @@ button {
 /* .king {
     background-color: yellow;
 } */
+
+.player-won {
+    margin-top: 40px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 80px;
+    background-color: rgb(0, 0, 0);
+    padding: 10px;    
+    
+}
+
+.time-won {
+    margin-right: 256px;
+    position: relative;
+    bottom: 15px;
+    font-size: 25px;
+}
