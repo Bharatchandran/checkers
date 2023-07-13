@@ -62,6 +62,7 @@ function init() {
     // renderBoard();
     winner = null;
     turn = -1;
+    initialRemove()
     player1Points = 0;
     player2Points = 0;
     renderTime();
@@ -101,6 +102,12 @@ function getWinner() {
 
     
 }
+function initialRemove() {
+    winnerText.innerHTML = "";
+    turnText.innerHTML = `<span >Turn: <span class="turn-color">Red</span> </span>`;
+    timeText.classList.remove("time-won")
+    timeText.innerHTML = `Time - <span class="display-time">0 : 0</span>`
+}
 
 function addKingClass() {
     board.forEach((rowArr, rowIdx) => {
@@ -133,12 +140,18 @@ function renderBoard() {
                 }  else if (square > 7 && square !== null) {
                     cellPiece.innerHTML = `<div class="piece red "></div>`;
                 } else if (square === 'x' && square !== null) {
-                    cellPiece.style.backgroundColor = 'green';
+                    cellPiece.style.backgroundColor = '#f58549';
                 } else if (square === null && cellPiece.classList.contains("dark")) {
                     cellPiece.innerHTML = "";
-                    cellPiece.style.backgroundColor = '#ec7f03';
+                    cellPiece.style.backgroundColor = '#0b132b';
 
                 } 
+                if(square === null && cellPiece.classList.contains("light")){
+                    cellPiece.style.backgroundColor = '#6fffe9';
+                }
+                if(square !== null && square !== 'x' && cellPiece.classList.contains("dark")){
+                    cellPiece.style.backgroundColor = '#0b132b';
+                }
                 // else if (square === null && cellPiece.classList.contains("dark")){
                 //     cellPiece.style.backgroundColor = 'white';
                 // }
@@ -317,7 +330,7 @@ function checkMoveRedBackward(i,j){
             if(board[i + 1][j - 1] === null){
                 moveLeftDiagBackward = true;
                 moveRightDiagBackward = false;
-            } else if (i < 6 && board[i + 1][j - 1] <= 7 && board[i - 2][j - 2] === null){
+            } else if (i < 6 && board[i + 1][j - 1] <= 7 && board[i + 2][j - 2] === null){
                 moveLeftDiagBackward = true;
                 moveRightDiagBackward = false;
             }
@@ -372,7 +385,7 @@ function checkMoveWhiteBackWard(i,j){
             if(board[i - 1][j - 1] === null){
                 moveLeftDiagBackward = true;
                 moveRightDiagBackward = false;
-            } else if (  i > 1 && board[i - 1][j - 1] <= 7 && board[i - 2][j - 2] === null ){
+            } else if (  i > 1 && board[i - 1][j - 1] > 7 && board[i - 2][j - 2] === null ){
                 moveLeftDiagBackward = true;
                 moveRightDiagBackward = false;
             }
@@ -1065,3 +1078,4 @@ function renderTime() {
         second += 1;
     },1000)
 }
+
