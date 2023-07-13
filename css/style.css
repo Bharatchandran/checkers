@@ -64,7 +64,8 @@ header {
 
 .square {
   /* height: 80px;
-  width: 80px; */
+  width: 80px; */ 
+  
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,15 +86,18 @@ header {
     width: 40px;
     height: 40px;
     margin: 5px;
+    
 }
 
 
 .white {
     background-color: #eae0d5;
+    border: 4px solid #f6ae2d;
 }
 
 .red {
-    background-color: #a71e34;
+    background-color: #bf4342;
+    border: 4px solid #8c1c13;
 }
 button {
     background-color: yellow;

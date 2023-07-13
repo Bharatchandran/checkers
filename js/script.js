@@ -147,7 +147,7 @@ function renderBoard() {
 
                 } 
                 if(square === null && cellPiece.classList.contains("light")){
-                    cellPiece.style.backgroundColor = '#6fffe9';
+                    cellPiece.style.backgroundColor = '#1c7293';
                 }
                 if(square !== null && square !== 'x' && cellPiece.classList.contains("dark")){
                     cellPiece.style.backgroundColor = '#0b132b';
