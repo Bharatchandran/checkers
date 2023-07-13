@@ -135,9 +135,13 @@ button {
     color:white;
 }
 
-/* .king {
-    background-color: yellow;
-} */
+.king {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #22333b;
+    font-weight: bold;
+}
 
 .player-won {
     margin-top: -10px;

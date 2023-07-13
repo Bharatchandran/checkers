@@ -111,9 +111,9 @@ function addKingClass() {
             const cellPiece = document.getElementById(cellId);
             if (kingClassArr.indexOf(square) >= 0) {
                 if (square <= 7 && square != null) {
-                    cellPiece.innerHTML = `<div class="piece white king "></div>`;
+                    cellPiece.innerHTML = `<div class="piece white king ">K</div>`;
                 } else if (square > 7 && square !== null) {
-                    cellPiece.innerHTML = `<div class="piece red king"></div>`;
+                    cellPiece.innerHTML = `<div class="piece red king">K</div>`;
                 }
             }
         })
