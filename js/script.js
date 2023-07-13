@@ -1,12 +1,15 @@
+
+// Variables
+
 let board;
 let turn;
 let numRedPieces;
 let numWhitePieces;
-let redPiece;
-let whitePiece;
 let boardPieceNum;
 let parentElId;
 let squareIdx;
+// 4 choices are the direction the checker coin can move 
+// choice 1 - Left Forward, choice 2 - Right Forward, choice 3 - Left Backward, choice 4 - Right Backward
 let choice1Row;
 let choice1Col;
 let choice2Row;
@@ -15,13 +18,11 @@ let choice3Row;
 let choice3Col;
 let choice4Row;
 let choice4Col;
-let myName;
-let parentEl;
+let parentEl; //the square which holds the selected coin
 let winner;
-let selectedEl;
-let kingClass;
-let kingClassArr = [null]
-let selectedPieceIdx;
+let selectedEl; // the selected coin
+let kingClassArr = [null] // token number which becomes the king
+let selectedPieceIdx; // array which holds current players coins index
 let player1Points;
 let player2Points;
 let time;
@@ -30,6 +31,7 @@ let moveRightDiag;
 let moveLeftDiagBackward;
 let moveRightDiagBackward;
 
+// Cached Elements
 
 const squares = document.querySelectorAll(".board .square");
 const resetBtn = document.querySelector("button");
@@ -37,9 +39,12 @@ const winnerText = document.querySelector(".player-won");
 const turnText = document.querySelector(".turn");
 const timeText = document.querySelector(".time");
 
+// EventListener
 document.querySelector("button").addEventListener('click', init)
 
+// Functions
 init();
+
 
 function init() {
     board = [
@@ -89,11 +94,14 @@ function getWinner() {
     }
 }
 
+// After winning bringing removing the changes made which was not there in the initial game
 function initialRemove() {
     winnerText.innerHTML = "";
     turnText.innerHTML = `<span >Turn: <span class="turn-color">Red</span> </span>`;
     timeText.classList.remove("time-won")
     timeText.innerHTML = `Time - <span class="display-time">0 : 0</span>`
+    document.querySelector(".player1-point").innerText = `0`
+    document.querySelector(".player2-point").innerText = `0`
 }
 
 function addKingClass() {
@@ -378,6 +386,7 @@ function checkIfCanMOve(i, j) {
     }
 }
 
+// Adding event listeners depending on whose turn it is and their ability to move
 function pieceSelection() {
     selectedPieceIdx = getPieceIdx();
     selectedPieceIdx.forEach((el) => {
@@ -814,6 +823,7 @@ function selectChoice4() {
     render();
 }
 
+//removing event listener for handlemove for array of specific coins
 function removePieceEventListener() {
     selectedPieceIdx = getPieceIdx()
     selectedPieceIdx.forEach((el) => {
