@@ -21,7 +21,7 @@ let choice4Col;
 let parentEl; //the square which holds the selected coin
 let winner;
 let selectedEl; // the selected coin
-let kingClassArr = [null] // token number which becomes the king
+let kingClassArr; // token number which becomes the king
 let selectedPieceIdx; // array which holds current players coins index
 let player1Points;
 let player2Points;
@@ -58,6 +58,7 @@ function init() {
         [null, 11, null, 13, null, 14, null, 15]
     ];
     winner = null;
+    kingClassArr = [null];
     turn = -1;
     initialRemove()
     player1Points = 0;
